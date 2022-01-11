@@ -126,13 +126,17 @@ class HomePage extends StatelessWidget {
 
                     var input = _controller.text;
                     var text = playGame(input,game);
+                    var result = 'RESULT';
+                    if(text=='กรอกข้อมูลไม่ถูกต้อง ให้กรอกเฉพาะตัวเลขเท่านั้น'){
+                      result = 'ERROR';
+                    }
 
                     showDialog(
                       context: context,
                       barrierDismissible: false,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('RESULT'),
+                          title: Text(result),
                           content: Text(text),
                           actions: [
                             TextButton(
