@@ -2,67 +2,80 @@
 
 import 'dart:io';
 import 'game.dart';
+import 'main.dart';
 
+/*
 void main() {
   while (true) {
-    playGame();
+    //playGame();
     String? input;
-    var len = Game.myList.length;
 
     do {
       stdout.write('Play again? (Y/N): ');
       input = stdin.readLineSync();
     } while (input!.toLowerCase() != 'y' && input.toLowerCase() != 'n');
 
-    if (input.toLowerCase() == 'n') {
-      print('╔════════════════════════════════════════');
-      print("║  You've played $len games");
-      print('╟────────────────────────────────────────');
-      for (int i = 0; i < len; i++) {
-        print('║ 🚀 Game # ${i + 1} : ${Game.myList[i]} guesses');
-      }
-      break;
-    }
+    if (input.toLowerCase() == 'n') break;
   }
 
-  // end of program
-}
+  print('\n\nYou\'ve played ${Game.guessCountList.length} games');
+  for (var i = 0; i < Game.guessCountList.length; i++) {
+    print('🚀 Game #${i + 1}: ${Game.guessCountList[i]} guesses');
+  }
 
-void playGame() {
-  stdout.write('Enter a maximum number to random : ');
-  var input = stdin.readLineSync();
-  var max = int.tryParse(input!);
-  var game = Game(a: max!);
+  /*var myList = [];
+  myList.add(1);
+  myList.add('hello');
+  myList.add(false);
+  for (var i = 0; i < myList.length; i++) {
+    print(myList[i]);
+  }
+  myList.forEach((item) {
+    print(item);
+  });*/
+}*/
+
+
+
+String playGame(var n, var game) {
+ // int? maxRandom;
+  /*do {
+    stdout.write('\nEnter a maximum number to random: ');
+    var input = stdin.readLineSync();
+    maxRandom = int.tryParse(input!);
+  } while (maxRandom == null);*/
+
+  //var game = Game();
   var isCorrect = false;
-
-  print('╔════════════════════════════════════════');
-  print('║            GUESS THE NUMBER            ');
-  print('╟────────────────────────────────────────');
+  var text = "";
 
   do {
-    stdout.write('║ Guess the number between 1 and ${game.maxRandom}: ');
-    var input = stdin.readLineSync();
+
+    var input = n;
     var guess = int.tryParse(input!);
     if (guess == null) {
+      text = 'กรอกข้อมูลไม่ถูกต้อง ให้กรอกเฉพาะตัวเลขเท่านั้น';
+      return text;
       continue;
     }
 
     var result = game.doGuess(guess);
 
     if (result == 1) {
-      print('║ ➜ $guess is TOO HIGH! ▲');
-      print('╟────────────────────────────────────────');
+      text =  '$guess มากเกินไป กรุณาลองใหม่';
+      return text;
     } else if (result == -1) {
-      print('║ ➜ $guess is TOO LOW! ▼');
-      print('╟────────────────────────────────────────');
+      text =  '$guess น้อยเกินไป กรุณาลองใหม่';
+      return text;
     } else if (result == 0) {
-      print('║ ➜ $guess is CORRECT ❤️, total guesses: ${game.guessCount}');
-      print('╟────────────────────────────────────────');
-
+      text =  '$guess ถูกต้องนะคร้าบ, คุณทายทั้งหมด : ${game.guessCount} ครั้ง';
       isCorrect = true;
+      return text;
+      //Game.guessCountList.add(game.guessCount);
+      //Game().addCountList();
+      return text;
     }
   } while (!isCorrect);
+  return text;
 
-  print('║                 THE END                ');
-  print('╚════════════════════════════════════════');
 }
